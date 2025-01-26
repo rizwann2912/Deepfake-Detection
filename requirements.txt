@@ -10,3 +10,4 @@ gdown
 matplotlib==3.9.0
 json5==0.9.25
 jsonschema==4.22.0
+gunicorn

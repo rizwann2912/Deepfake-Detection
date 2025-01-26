@@ -322,8 +322,15 @@ def predict_page(request):
             preprocessed_images.append(image_name)
 
             # Face detection and cropping
-            face_locations = face_recognition.face_locations(rgb_frame)
-            if len(face_locations) == 0:
+            face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+
+            # Convert the image to grayscale
+            gray = cv2.cvtColor(rgb_frame, cv2.COLOR_RGB2GRAY)
+
+            # Detect faces
+            faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+
+            if len(faces) == 0:
                 continue
 
             top, right, bottom, left = face_locations[0]

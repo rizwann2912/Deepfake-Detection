@@ -21,7 +21,7 @@ SECRET_KEY = '@)0qp0!&-vht7k0wyuihr+nk-b8zrvb5j^1d@vl84cd1%)f=dz'
 DEBUG = True
 
 # Change and set this to correct IP/Domain
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -70,7 +70,7 @@ WSGI_APPLICATION = 'project_settings.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(PROJECT_DIR, 'db.sqlite3'),
+        "NAME": "/var/data/db.sqlite3",  # Persistent path for Render
     }
 }
 
@@ -133,3 +133,4 @@ if DEBUG == False:
             },
         },
     }
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

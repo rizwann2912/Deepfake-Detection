@@ -1,10 +1,15 @@
 services:
   - type: web
-    name: deepfake-detection
+    name: django-app
     env: python
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "python manage.py runserver 0.0.0.0:$PORT"
+    startCommand: "gunicorn project_settings.wsgi:application --bind 0.0.0.0:$PORT"
     envVars:
-      - key: DJANGO_SECRET_KEY
-        value: your_secret_key
-    autoDeploy: true
+      - key: DJANGO_SETTINGS_MODULE
+        value: project_settings.settings
+      - key: PYTHONUNBUFFERED
+        value: "true"
+    staticPublishPath: staticfiles
+    volumes:
+      - name: django-data
+        path: /var/data

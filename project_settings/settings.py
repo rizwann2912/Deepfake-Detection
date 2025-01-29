@@ -31,7 +31,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ml_app.apps.MlAppConfig'
+    'ml_app.apps.MlAppConfig',
+    "whitenoise.runserver_nostatic"
 ]
 
 MIDDLEWARE = [
@@ -41,6 +42,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware"
 ]
 
 ROOT_URLCONF = 'project_settings.urls'
@@ -70,7 +72,7 @@ WSGI_APPLICATION = 'project_settings.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "/var/data/db.sqlite3",  # Persistent path for Render
+        "NAME": os.path.join(PROJECT_DIR, 'db.sqlite3'),
     }
 }
 
@@ -92,17 +94,25 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-#used in production to serve static files
-STATIC_ROOT = "/home/app/staticfiles/"
 
-#url for static files
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Define PROJECT_DIR (Same as BASE_DIR, so no need to redefine separately)
+PROJECT_DIR = BASE_DIR
+
+# URL to serve static files
 STATIC_URL = '/static/'
 
+# Directory where `collectstatic` will gather all static files for deployment
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # ✅ Use BASE_DIR, avoid hardcoded paths
+
+# Directories where Django will look for additional static files
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_DIR, 'uploaded_images'),
-    os.path.join(PROJECT_DIR, 'static'),
-    os.path.join(PROJECT_DIR, 'models'),
+    os.path.join(PROJECT_DIR, 'uploaded_images'),  # ✅ If used for storing static images
+    os.path.join(PROJECT_DIR, 'static'),  # ✅ Must contain CSS, JS, etc.
+    os.path.join(PROJECT_DIR, 'models'),  # ✅ If models contain static files
 ]
+
 
 CONTENT_TYPES = ['video']
 MAX_UPLOAD_SIZE = "104857600"
@@ -133,4 +143,3 @@ if DEBUG == False:
             },
         },
     }
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

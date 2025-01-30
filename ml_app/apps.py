@@ -20,7 +20,8 @@ class MlAppConfig(AppConfig):
             print("Deepfake model not found. Downloading...")
             try:
                 # Google Drive file URL (with your file ID)
-                file_url = 'https://drive.google.com/uc?id=1QPK-8ANQwl_73t5DPY1zF8-Egb0L5ifJ'
+                file_url = 'https://drive.google.com/uc?id=16rayULoKYjRx8Ww3B2uE3eiFnKWxodN4'
+                
                 gdown.download(file_url, model_file_path, quiet=False)
                 print(f"Deepfake model downloaded successfully to {model_file_path}.")
             except Exception as e:

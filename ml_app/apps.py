@@ -1,4 +1,4 @@
-from django.conf import settings
+from django.apps import AppConfig
 import os
 import gdown
 

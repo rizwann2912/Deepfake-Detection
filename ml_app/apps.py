@@ -18,8 +18,8 @@ class MlAppConfig(AppConfig):
         if not os.path.exists(model_file_path):
             print("Deepfake model not found. Downloading...")
             try:
-                file_url = 'https://drive.google.com/uc?id=16rayULoKYjRx8Ww3B2uE3eiFnKWxodN4'
-                gdown.download(file_url, model_file_path, quiet=False)
+                gdown.download("https://drive.google.com/uc?id=16rayULoKYjRx8Ww3B2uE3eiFnKWxodN4", model_file_path, quiet=False, fuzzy=True)
+
                 print(f"Model downloaded successfully to {model_file_path}.")
             except Exception as e:
                 print(f"Error downloading model: {e}")

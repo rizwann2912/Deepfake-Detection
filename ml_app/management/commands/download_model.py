@@ -18,7 +18,7 @@ class Command(BaseCommand):
         if not os.path.exists(model_file_path):
             print("Downloading deepfake model...")
             try:
-                file_url = "https://drive.google.com/uc?id=16rayULoKYjRx8Ww3B2uE3eiFnKWxodN4"
+                file_url = "https://drive.google.com/uc?id=13WKWR3r8cM9DeguLoKXOumsi1gSQgKnm"
                 gdown.download(file_url, model_file_path, quiet=False)
                 print("Model downloaded successfully!")
             except Exception as e:

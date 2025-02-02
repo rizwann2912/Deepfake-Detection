@@ -1,5 +1,5 @@
 import os
-import gdown
+import subprocess
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
@@ -12,14 +12,16 @@ class Command(BaseCommand):
 
         os.makedirs(models_folder, exist_ok=True)
 
-        if not os.path.exists(model_file_path):
+        if not os.path.exists(model_file_path) or os.path.getsize(model_file_path) == 0:
             print("Downloading deepfake model...")
+
+            file_id = "13WKWR3r8cM9DeguLoKXOumsi1gSQgKnm"
+            file_url = f"https://drive.google.com/uc?export=download&id={file_id}"
+
             try:
-                file_id = "13WKWR3r8cM9DeguLoKXOumsi1gSQgKnm"  
-                file_url = f"https://drive.google.com/uc?export=download&id={file_id}"
-
-                gdown.download(file_url, model_file_path, quiet=False)
-
+                # Use wget instead of gdown
+                subprocess.run(["wget", file_url, "-O", model_file_path], check=True)
+                
                 if os.path.exists(model_file_path) and os.path.getsize(model_file_path) > 0:
                     print("✅ Model downloaded successfully!")
                 else:
@@ -28,3 +30,4 @@ class Command(BaseCommand):
                 print(f"❌ Error downloading model: {e}")
         else:
             print("✅ Model already exists.")
+
